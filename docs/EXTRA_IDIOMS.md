@@ -30,7 +30,7 @@
 
 ## 文件、迁移与备份
 
-NAS 的 `data/library-state.json` 保存普通库修改记录 `ordinaryOverrides` 和扩展词条 `extra`。普通库以官方原始目录为基础，修改记录中的 `null` 表示删除，词条对象表示新增或修改。官方源文件保留作为初始目录。
+部署目录的 `data/library-state.json` 保存普通库修改记录 `ordinaryOverrides` 和扩展词条 `extra`。普通库以官方原始目录为基础，修改记录中的 `null` 表示删除，词条对象表示新增或修改。官方源文件保留作为初始目录。
 
 v0.2.0 升级时自动将 `data/extra-idioms.json` 导入新文件，旧文件保留作迁移备份。迁移完成后，旧文件不再用于读取后续修改。管理页面始终读取新文件。
 

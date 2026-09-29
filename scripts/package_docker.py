@@ -1,4 +1,4 @@
-"""Package the built site and dependency-free Node server for Synology Compose deployment."""
+"""Package the built site and dependency-free Node server for Docker Compose deployment."""
 import hashlib
 import json
 import shutil
@@ -23,7 +23,9 @@ for file in ("index.mjs", "config.json", "catalog.json"):
     shutil.copy2(root / "server" / file, stage / "server" / file)
 for file in ("compose.yaml",):
     shutil.copy2(root / "deploy" / file, stage / file)
-shutil.copy2(root / "docs/SYNOLOGY.md", stage / "README.md")
+shutil.copy2(root / "docs/DOCKER.md", stage / "README.md")
+shutil.copy2(root / "docs/DOCKER.md", stage / "DOCKER.md")
+shutil.copy2(root / "docs/SYNOLOGY.md", stage / "SYNOLOGY.md")
 shutil.copy2(root / "docs/EXTRA_IDIOMS.md", stage / "EXTRA_IDIOMS.md")
 shutil.copy2(root / "LICENSE", stage / "LICENSE")
 shutil.copy2(root / "UPSTREAM.md", stage / "UPSTREAM.md")
