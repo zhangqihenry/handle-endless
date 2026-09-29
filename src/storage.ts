@@ -1,30 +1,30 @@
 import type { SpMode } from '@hankit/tools'
 import { preferZhuyin, t } from './i18n'
-import { dayNo } from './state'
+import { gameKey } from './state'
 import type { InputMode, TriesMeta } from './logic'
 
 export const legacyTries = useStorage<Record<number, string[]>>('handle-tries', {})
 
-export const history = useStorage<Record<number, TriesMeta>>('handle-tries-meta', {})
+export const history = useStorage<Record<string, TriesMeta>>('handle-endless-history-v1', {})
 export const initialized = useStorage('handle-initialized', false)
 
 export const inputMode = useStorage<InputMode>('handle-mode', preferZhuyin ? 'zy' : 'py')
 export const spMode = useStorage<SpMode>('handle-sp-mode', 'sougou')
 export const colorblind = useStorage('handle-colorblind', false)
-export const useNoHint = useStorage('handle-hard-mode', false)
+export const useNoHint = useStorage('handle-endless-no-hint-v2', true)
 export const useNumberTone = useStorage('handle-number-tone', false)
 export const useCheckAssist = useStorage('handle-check-assist', false)
-export const useStrictMode = useStorage('handle-strict', false)
+export const useStrictMode = useStorage('handle-endless-strict-v2', true)
 export const acceptCollecting = useStorage('handle-accept-collecting', true)
 
 export const meta = computed<TriesMeta>({
   get() {
-    if (!(dayNo.value in history.value))
-      history.value[dayNo.value] = {}
-    return history.value[dayNo.value]
+    if (!(gameKey.value in history.value))
+      history.value[gameKey.value] = {}
+    return history.value[gameKey.value]
   },
   set(v) {
-    history.value[dayNo.value] = v
+    history.value[gameKey.value] = v
   },
 })
 
@@ -32,7 +32,7 @@ export const tries = computed<string[]>({
   get() {
     if (!meta.value.tries)
       meta.value.tries = []
-    return legacyTries.value[dayNo.value] || meta.value.tries
+    return meta.value.tries
   },
   set(v) {
     meta.value.tries = v

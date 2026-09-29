@@ -1,10 +1,19 @@
 // register vue composition api globally
 import { createApp } from 'vue'
-import App from './App.vue'
+import { loadExtraLibrary } from './endless/library'
 
 import '@unocss/reset/tailwind.css'
 import './styles/main.css'
 import 'uno.css'
 
-const app = createApp(App)
-app.mount('#app')
+async function bootstrap() {
+  if (window.location.pathname.replace(/\/$/, '') === '/admin') {
+    const { default: AdminApp } = await import('./AdminApp.vue')
+    createApp(AdminApp).mount('#app')
+    return
+  }
+  await loadExtraLibrary()
+  const { default: App } = await import('./App.vue')
+  createApp(App).mount('#app')
+}
+bootstrap()

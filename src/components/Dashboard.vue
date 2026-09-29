@@ -72,14 +72,14 @@ const validWords = computed(() => allWords.value.filter(i => checkValidIdiom(i, 
       <DashboardItem :value="gamesCount" :text="t('games-count')" />
       <DashboardItem :value="passedCount" :text="t('win-count')" />
       <DashboardItem :value="noHintPassedCount" :text="t('win-no-hint-count')" />
-      <DashboardItem :value="`${Math.round(passedCount / gamesCount * 100)}%`" :text="t('win-rate')" />
+      <DashboardItem :value="`${Math.round(passedCount / (gamesCount || 1) * 100)}%`" :text="t('win-rate')" />
     </div>
     <div flex="~ wrap gap-4" justify-center min-w-100px py2>
       <DashboardItem :value="allWords.length" :text="t('used-words')" />
-      <DashboardItem :value="`${Math.round(validWords.length / allWords.length * 100)}%`" :text="t('valid-words-rate')" />
+      <DashboardItem :value="`${Math.round(validWords.length / (allWords.length || 1) * 100)}%`" :text="t('valid-words-rate')" />
     </div>
     <div flex="~ wrap gap-4" justify-center min-w-100px py2>
-      <DashboardItem :value="(historyTriesCount / gamesCount).toFixed(1)" :text="t('average-tries-count')" />
+      <DashboardItem :value="(historyTriesCount / (gamesCount || 1)).toFixed(1)" :text="t('average-tries-count')" />
       <DashboardItem :value="averageDurations || '-'" :text="t('average-durations')" />
     </div>
   </div>

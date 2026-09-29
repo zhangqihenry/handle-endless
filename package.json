@@ -1,15 +1,20 @@
 {
   "type": "module",
   "private": true,
-  "packageManager": "pnpm@7.8.0",
+  "packageManager": "pnpm@7.33.7",
   "scripts": {
-    "dev": "vite --port 4444",
+    "dev": "vite --host 0.0.0.0 --port 13864",
     "netlify": "netlify dev --port 3333 --targetPort 4444",
-    "build": "vite build",
-    "preview": "vite preview",
+    "build": "pnpm catalog && vite build",
+    "preview": "node server/index.mjs",
     "lint": "eslint .",
     "update": "TEST=true vite-node tools/update.ts",
-    "test": "vitest"
+    "test": "vitest",
+    "test:run": "vitest run && node --test server/server.test.mjs",
+    "package:docker": "pnpm build && python3 scripts/package_docker.py",
+    "catalog": "TEST=true vite-node tools/build-catalog.ts",
+    "start": "node server/index.mjs",
+    "test:server": "node --test server/server.test.mjs"
   },
   "dependencies": {
     "@iconify-json/ri": "^1.1.4",
@@ -53,5 +58,12 @@
     "vite": "^4.0.1",
     "vite-node": "^0.25.8",
     "vitest": "^0.25.8"
+  },
+  "name": "handle-endless",
+  "version": "1.0.0",
+  "author": "Henry Zhang <260811579+zhangqihenry@users.noreply.github.com>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zhangqihenry/handle-endless.git"
   }
 }

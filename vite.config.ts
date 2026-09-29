@@ -8,6 +8,7 @@ import AutoImport from 'unplugin-auto-import/vite'
 import Unocss from 'unocss/vite'
 
 export default defineConfig({
+  server: { proxy: { '/api': 'http://127.0.0.1:13863', '/libraries.json': 'http://127.0.0.1:13863', '/extra-idioms.json': 'http://127.0.0.1:13863' } },
   resolve: {
     alias: {
       '~/': `${path.resolve(__dirname, 'src')}/`,
@@ -17,7 +18,7 @@ export default defineConfig({
   define: {
     'import.meta.vitest': 'false',
   },
-  plugins: process.env.TEST
+  plugins: process.env.TEST && !process.env.VITEST
     ? []
     : [
         Vue(),
@@ -34,6 +35,7 @@ export default defineConfig({
         Unocss(),
       ],
   test: {
+    include: ['test/**/*.test.ts', 'packages/**/test/**/*.test.ts'],
     includeSource: ['packages/*/src/**/*.ts'],
   },
   build: {

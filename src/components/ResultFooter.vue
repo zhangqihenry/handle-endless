@@ -18,7 +18,7 @@ const hintText = computed(() => {
 </script>
 
 <template>
-  <div op50 my1 text-sm ws-nowrap text-center>
+  <div op50 my1 text-sm text-center>
     <template v-if="day">
       {{ dayNoHanzi }} ·
     </template>

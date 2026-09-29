@@ -1,0 +1,23 @@
+services:
+  handle-endless:
+    image: node:22-alpine
+    restart: unless-stopped
+    working_dir: /app
+    command: ["node", "/app/server/index.mjs"]
+    ports:
+      - "${HANDLE_PORT:-13863}:13863"
+    environment:
+      TZ: Asia/Hong_Kong
+      PORT: "13863"
+      WEB_DIR: /app/www
+      DATA_DIR: /app/data
+      COOKIE_SECURE: "${COOKIE_SECURE:-false}"
+    volumes:
+      - ./www:/app/www:ro
+      - ./server:/app/server:ro
+      - ./data:/app/data
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:13863/healthz').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 30s
+      timeout: 5s
+      retries: 3

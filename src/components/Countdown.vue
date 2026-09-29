@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { now } from '~/state'
+import { dayNo, daySince, isRandom, now } from '~/state'
 import { t } from '~/i18n'
-import { START_DATE, isDstObserved } from '~/logic'
-const ms = computed(() => 86400000 - ((isDstObserved(now.value) ? +now.value + 3600000 : +now.value) - +START_DATE) % 86400000)
+import { EPOCH } from '~/endless/puzzle'
+const ms = computed(() => 86400000 - (+now.value - EPOCH) % 86400000)
 const formatted = computed(() => {
   const h = Math.floor((ms.value % 86400000) / 3600000)
   const m = Math.floor((ms.value % 3600000) / 60000)
@@ -20,7 +20,7 @@ const formatted = computed(() => {
 
     <div h-1px w-10 border="t base" mt4 mb6 mxa />
 
-    <div flex="~ col center" relative>
+    <div v-if="!isRandom && dayNo === daySince" flex="~ col center" relative>
       <div op50 ws-nowrap>
         {{ t('next-note') }}
       </div>

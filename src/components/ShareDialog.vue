@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { showShareDialog } from '~/state'
+import { puzzleLabel, showShareDialog } from '~/state'
 import { t } from '~/i18n'
 
 const shareType = ref<'text' | 'image' | null>()
@@ -32,6 +32,9 @@ watch(showShareDialog, (v) => {
             : t('share')
       }}</b>
     </p>
+    <div class="share-puzzle-label">
+      {{ puzzleLabel }}
+    </div>
     <template v-if="!shareType">
       <div>
         {{ t('select-share-method') }}

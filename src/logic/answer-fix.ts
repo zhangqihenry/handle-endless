@@ -3,7 +3,7 @@ import { history } from '~/storage'
 import { getAnswerOfDay } from '~/answers'
 
 export function tryFixAnswer(day: number) {
-  const meta = history.value[day]
+  const meta = history.value[`daily:${day}`]
   const answer = getAnswerOfDay(day)
   if (!meta)
     return

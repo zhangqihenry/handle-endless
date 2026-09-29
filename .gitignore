@@ -10,3 +10,9 @@ node_modules
 .netlify
 .env
 src/data/unknown.txt
+
+releases/
+artifacts/
+
+data/
+server/catalog.json

@@ -14,6 +14,8 @@ const shake = autoResetRef(false, 500)
 const isFinishedDelay = debouncedRef(isFinished, 800)
 
 function enter() {
+  if (isFinished.value)
+    return
   if (input.value.length !== WORD_LENGTH)
     return
   if (!checkValidIdiom(input.value, useStrictMode.value)) {
@@ -96,14 +98,14 @@ watchEffect(() => {
             <input
               ref="el"
               v-model="inputValue"
-              bg-transparent w-86 p3 outline-none text-center
+              bg-transparent w-86 max-w-full p3 outline-none text-center
               type="text"
-              autocomplete="false"
+              autocomplete="off"
               :placeholder="t('input-placeholder')"
               :disabled="isFinished"
               :class="{ shake }"
               @input="handleInput"
-              @keydown.enter="enter"
+              @keydown.enter="!$event.isComposing && enter()"
             >
             <div
               absolute top-0 left-0 right-0 bottom-0

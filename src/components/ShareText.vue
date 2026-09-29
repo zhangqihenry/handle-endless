@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { t } from '~/i18n'
-import { answer, dayNoHanzi, isMobile, parseWord, testAnswer } from '~/state'
+import { answer, parseWord, puzzleLabel, shareUrl, testAnswer } from '~/state'
 import { meta, tries } from '~/storage'
 
 const lines = computed(() => {
@@ -27,15 +27,15 @@ const lines = computed(() => {
 
   return [
     [
-      t('name'),
-      dayNoHanzi.value,
+      'Handle_Endless',
+      puzzleLabel.value,
       meta.value.strict ? t('strict-mode').slice(0, 2) : '',
       !meta.value.hint ? t('hint-level-none') : '',
     ].filter(Boolean).join(' · '),
     '',
     ...table,
     '',
-    'handle.antfu.me',
+    shareUrl.value,
   ]
 })
 
@@ -45,21 +45,32 @@ const share = useShare(computed(() => ({
   title: t('name'),
   text: text.value,
 })))
+const canShare = computed(() => unref(share.isSupported))
 const clipboard = useClipboard()
 const copied = ref(false)
 
 async function shareSystem() {
-  if (share.isSupported && isMobile) {
-    await share.share()
-    return true
+  if (unref(share.isSupported)) {
+    try {
+      await share.share()
+      return true
+    }
+    catch {
+      return false
+    }
   }
   return false
 }
 
 onMounted(async () => {
-  if (clipboard.isSupported) {
-    await clipboard.copy(text.value)
-    copied.value = true
+  if (unref(clipboard.isSupported)) {
+    try {
+      await clipboard.copy(text.value)
+      copied.value = true
+    }
+    catch {
+      copied.value = false
+    }
   }
 })
 </script>
@@ -70,12 +81,12 @@ onMounted(async () => {
   </p>
   <textarea
     bg-gray-500:5 rounded p5 select-text resize-none outline-none
-    w-90 text-center
+    w-90 max-w-full text-center
     style="line-height: 19px;letter-spacing: 1px;"
     :rows="lines.length"
     :value="text" readonly
   />
-  <button v-if="share.isSupported" my4 square-btn @click="shareSystem()">
+  <button v-if="canShare" my4 square-btn @click="shareSystem()">
     <div i-carbon-share />
     {{ t('share-with-system-api') }}
   </button>

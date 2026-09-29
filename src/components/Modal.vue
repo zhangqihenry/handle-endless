@@ -64,6 +64,8 @@ const transform = computed(() => {
 <template>
   <div
     fixed z-40
+    :aria-hidden="!modelValue"
+    :inert="!modelValue ? '' : undefined"
     :class="[containerPositionClass, modelValue ? '' : 'pointer-events-none']"
   >
     <div
@@ -77,7 +79,7 @@ const transform = computed(() => {
       :class="[positionClass]"
       :style="modelValue ? {} : { transform }"
     >
-      <slot />
+      <slot v-if="modelValue" />
     </div>
   </div>
 </template>

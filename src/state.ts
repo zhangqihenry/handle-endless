@@ -1,8 +1,10 @@
 import { breakpointsTailwind } from '@vueuse/core'
 import type { MatchType, ParsedChar } from './logic'
-import { START_DATE, TRIES_LIMIT, WORD_LENGTH, parseWord as _parseWord, testAnswer as _testAnswer, checkPass, getHint, isDstObserved, numberToHanzi } from './logic'
+import { TRIES_LIMIT, WORD_LENGTH, parseWord as _parseWord, testAnswer as _testAnswer, checkPass, getHint, numberToHanzi } from './logic'
 import { useNumberTone as _useNumberTone, inputMode, meta, spMode, tries } from './storage'
 import { getAnswerOfDay } from './answers'
+import { dateOfDay, dayAt, parseDate, puzzleKey, randomWord, validSeed } from './endless/puzzle'
+import { libraryWarning, randomPool, randomPoolVersion } from './endless/library'
 
 export const isIOS = /iPad|iPhone|iPod/.test(navigator.platform) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)
 export const isMobile = isIOS || /iPad|iPhone|iPod|Android|Phone|webOS/i.test(navigator.userAgent)
@@ -16,7 +18,6 @@ export const showHelp = ref(false)
 export const showShare = ref(false)
 export const showFailed = ref(false)
 export const showDashboard = ref(false)
-export const showVariants = ref(false)
 export const showCheatSheet = ref(false)
 export const showShareDialog = ref(false)
 export const useMask = ref(false)
@@ -30,22 +31,52 @@ export const useNumberTone = computed(() => {
 })
 
 const params = new URLSearchParams(window.location.search)
-export const isDev = import.meta.hot || params.get('dev') === 'hey'
-export const daySince = useDebounce(computed(() => {
-  // Adjust date for daylight saving time, assuming START_DATE is not in DST
-  const adjustedNow = isDstObserved(now.value) ? new Date(+now.value + 3600000) : now.value
-  return Math.floor((+adjustedNow - +START_DATE) / 86400000)
-}))
-export const dayNo = ref(+(params.get('d') || daySince.value))
-export const dayNoHanzi = computed(() => `${numberToHanzi(dayNo.value)}日`)
-export const answer = computed(() =>
-  params.get('word')
-    ? {
-        word: params.get('word')!,
-        hint: getHint(params.get('word')!),
-      }
-    : getAnswerOfDay(dayNo.value),
-)
+export const isDev = false
+export const daySince = computed(() => dayAt(+now.value))
+export const isRandom = params.has('seed')
+export const randomSeed = params.get('seed') || ''
+const requestedDate = params.get('date')
+const legacyDay = params.get('d')
+const selectedDay = requestedDate != null ? parseDate(requestedDate) : legacyDay != null && /^\d+$/.test(legacyDay) ? Number(legacyDay) : daySince.value
+export const dayNo = ref(selectedDay != null && Number.isSafeInteger(selectedDay) && selectedDay >= 1 && selectedDay <= daySince.value ? selectedDay : daySince.value)
+export const puzzleError = computed(() => {
+  if (isRandom) {
+    if (libraryWarning)
+      return libraryWarning
+    if (!validSeed(randomSeed))
+      return '种子号必须是 1 至 64 位数字。请点击随机按钮重新输入。'
+    if (params.has('pool') && params.get('pool') !== randomPoolVersion)
+      return '此链接的词库版本与本站不同，无法保证题目一致。请使用相同词库版本的站点，或重新输入种子号开始当前版本的题目。'
+  }
+  else if (selectedDay == null || !Number.isSafeInteger(selectedDay) || selectedDay < 1 || selectedDay > daySince.value || (legacyDay != null && !/^\d+$/.test(legacyDay)) || dayNo.value < 1 || dayNo.value > daySince.value) {
+    return '请选择 2022-01-01 至今天之间的有效日期。'
+  }
+  return ''
+})
+export const puzzleDate = computed(() => dateOfDay(dayNo.value))
+export const puzzleLabel = computed(() => isRandom ? `随机题 · 种子 ${randomSeed}` : `${puzzleDate.value} · ${dayNo.value === daySince.value ? '每日题目' : '历史题目'}`)
+export const dayNoHanzi = computed(() => isRandom ? `种子 ${randomSeed}` : `${puzzleDate.value} · 第${numberToHanzi(dayNo.value)}日`)
+export const gameKey = computed(() => puzzleKey(dayNo.value, isRandom ? randomSeed : undefined, randomPoolVersion))
+export const shareUrl = computed(() => {
+  const url = new URL(window.location.pathname, window.location.origin)
+  if (isRandom) {
+    url.searchParams.set('seed', randomSeed)
+    url.searchParams.set('pool', randomPoolVersion)
+  }
+  else {
+    url.searchParams.set('date', puzzleDate.value)
+  }
+  return url.href
+})
+export const answer = computed(() => {
+  if (puzzleError.value)
+    return { word: '', hint: '' }
+  if (isRandom) {
+    const word = randomWord(randomSeed, randomPool, randomPoolVersion)
+    return { word, hint: getHint(word) }
+  }
+  return getAnswerOfDay(dayNo.value)
+})
 
 export const hint = computed(() => answer.value.hint)
 export const parsedAnswer = computed(() => parseWord(answer.value.word))

@@ -73,3 +73,46 @@ ul {
     transform: translate(-1px);
   }
 }
+
+/* Handle_Endless navigation and accessible native dialogs */
+.puzzle-toolbar { max-width: 460px; margin: 0 auto; padding: 22px 18px 0; }
+.edition { font-size: 11px; letter-spacing: 2px; color: #638086; margin-bottom: 18px; }
+.edition span { margin-left: 8px; letter-spacing: 1px; }
+.mode-actions { display: flex; justify-content: center; gap: 8px; }
+.mode-actions button { display: flex; align-items: center; justify-content: center; gap: 7px; min-width: 96px; padding: 10px 18px; border: 1px solid #d7e2e3; border-radius: 8px; font-size: 14px; }
+.mode-actions .selected { color: var(--c-primary); background: #0d828e0d; border-color: var(--c-primary); }
+.puzzle-title { font-size: 17px; font-weight: 600; margin: 22px 0 6px; overflow-wrap: anywhere; }
+.puzzle-note { font-size: 12px; opacity: .6; }
+.date-navigation { display: flex; justify-content: center; gap: 35px; margin-top: 14px; font-size: 13px; color: var(--c-primary); }
+.endless-dialog { color: #33494c; background: #fff; border: 1px solid #dbe5e6; border-radius: 16px; padding: 24px; width: min(420px, calc(100vw - 24px)); max-height: calc(100dvh - 32px); overflow: auto; margin: auto; text-align: left; box-shadow: 0 20px 80px #102c3c33; }
+.endless-dialog::backdrop { background: #142d3c66; backdrop-filter: blur(3px); }
+.dialog-heading { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.dialog-heading h2 { font-size: 20px; font-weight: 600; }
+.dialog-heading button { font-size: 26px; width: 32px; height: 32px; line-height: 1; }
+.dialog-description { font-size: 13px; line-height: 1.8; opacity: .65; margin: 10px 0; }
+.calendar-heading { display: flex; justify-content: space-between; align-items: center; margin: 24px 0 12px; }
+.calendar-heading button { width: 36px; height: 36px; border-radius: 6px; border: 1px solid #dbe5e6; }
+.calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; text-align: center; }
+.calendar-grid .weekday { font-size: 12px; opacity: .5; padding: 8px 0; }
+.calendar-grid button { height: 40px; border-radius: 6px; font-size: 14px; position: relative; }
+.calendar-grid button:hover:not(:disabled) { background: #0d828e15; }
+.calendar-grid .today { border: 1px solid var(--c-primary); }
+.calendar-grid .active { background: var(--c-primary) !important; color: white; }
+.calendar-grid .completed::after { content: ''; width: 4px; height: 4px; border-radius: 50%; background: currentColor; position: absolute; bottom: 4px; left: calc(50% - 2px); }
+.endless-dialog button:disabled, .date-navigation button:disabled { opacity: .25; cursor: not-allowed; }
+.date-jump { margin-top: 22px; border-top: 1px solid #dbe5e6; padding-top: 18px; }
+.date-jump label, .seed-label { display: block; font-size: 13px; margin-bottom: 8px; }
+.date-jump > div { display: flex; gap: 10px; }
+.date-jump input, .seed-input { min-width: 0; width: 100%; border: 1px solid #bbcdd0; border-radius: 6px; background: transparent; color: inherit; padding: 10px 12px; }
+.primary-action { padding: 10px 20px; background: var(--c-primary); color: white; border-radius: 6px; white-space: nowrap; }
+.random-actions { display: flex; justify-content: space-between; align-items: center; margin: 18px 0; font-size: 14px; }
+.pool-details { font-size: 12px; line-height: 1.8; opacity: .65; overflow-wrap: anywhere; }
+.pool-details code { font-size: 10px; }
+.form-error, .puzzle-error, .library-warning { font-size: 13px; line-height: 1.8; color: #b45309; margin: 12px auto; max-width: 460px; }
+.puzzle-error a { display: block; text-decoration: underline; }
+.share-puzzle-label { font-size: 14px; font-weight: 600; margin: 4px 0 16px; max-width: 360px; overflow-wrap: anywhere; }
+.dark .endless-dialog { background: #182124; color: #d6e0e1; border-color: #36474b; color-scheme: dark; }
+.dark .mode-actions button, .dark .date-jump, .dark .calendar-heading button { border-color: #36474b; }
+.dark .mode-actions .selected { border-color: #299eac; color: #6cc1c7; }
+button:focus-visible, input:focus-visible, a:focus-visible, summary:focus-visible { outline: 2px solid var(--c-primary); outline-offset: 3px; }
+@media (max-width: 380px) { .mode-actions button { min-width: 84px; padding: 9px 12px; } .endless-dialog { padding: 18px; } }

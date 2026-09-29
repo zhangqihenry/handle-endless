@@ -67,6 +67,7 @@ defineProps<{
     <div v-if="!lite" flex="~ center wrap">
       <button
         square-btn m2
+        :aria-pressed="useNoHint"
         :class="useNoHint ? 'text-primary' : 'op80' "
         @click="useNoHint = !useNoHint"
       >
@@ -87,6 +88,7 @@ defineProps<{
           useStrictMode ? 'text-primary' : 'op80',
           !!meta.tries?.length ? 'op50 pointer-events-none' : '',
         ]"
+        :aria-pressed="useStrictMode"
         @click="useStrictMode = !useStrictMode"
       >
         {{ t('strict-mode') }}

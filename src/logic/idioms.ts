@@ -1,5 +1,6 @@
 import { getPinyinRaw, toSimplified } from '@hankit/tools'
 import PolyphonesRaw from '../data/polyphones.json'
+import { extraPronunciations, officialSet, ordinaryOverrides } from '../endless/library'
 import IdiomsRaw from '../data/idioms.txt?raw'
 
 export const IdiomsList = IdiomsRaw.split('\n').map(i => i.trim()).filter(Boolean)
@@ -7,6 +8,15 @@ export const Polyphones = PolyphonesRaw as Record<string, string>
 
 export function getIdiom(word: string): [string, string | undefined] | undefined {
   const simplified = toSimplified(word)
+  // Daily candidates keep their upstream reading and remain valid guesses.
+  if (!officialSet.has(simplified)) {
+    if (extraPronunciations[simplified])
+      return [simplified, extraPronunciations[simplified]]
+    if (Object.prototype.hasOwnProperty.call(ordinaryOverrides, simplified)) {
+      const entry = ordinaryOverrides[simplified]
+      return entry ? [simplified, entry.pinyin] : undefined
+    }
+  }
   if (Polyphones[word])
     return [word, Polyphones[word]]
   if (Polyphones[simplified])
@@ -15,6 +25,8 @@ export function getIdiom(word: string): [string, string | undefined] | undefined
     return [word, undefined]
   if (IdiomsList.includes(simplified))
     return [simplified, undefined]
+  if (extraPronunciations[simplified])
+    return [simplified, extraPronunciations[simplified]]
   return undefined
 }
 

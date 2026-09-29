@@ -1,41 +1,29 @@
-![](./public/og.png)
+handle-endless · 1.0.0
 
-# 汉兜 Handle
+汉兜无限，今天也来猜个痛快！
 
-A Chinese Hanzi variation of [Wordle](https://www.powerlanguage.co.uk/wordle/). 汉字 Wordle.
+每日题目跟官方同步，和大家一起开动脑筋。
 
-[handle.antfu.me](https://handle.antfu.me)
+日历里的旧题随时补，错过的快乐补回来。
 
-请勿剧透！PLEASE DO NOT SPOIL
+相同词库、相同种子，就是同一道题，喊朋友来过招。
 
-> **Note**
-> 汉兜的答案库至 2023 年 2 月 28 日为止将**不再更新**；后序的题目将从过往一年的题目中随机抽取。仓库以 MIT 协议开放，在注明原始仓库与作者的条件下，欢迎 Fork 与修改。感谢大家的对汉兜的支持与喜爱。
+随机题目覆盖每日库和扩展库，成语越攒越好玩。
 
-## Development Setup
+普通库和扩展库都能维护，勾选一下就把成语加入随机挑战。
 
-- Insall [Node.js](https://nodejs.org/en/) >=v16 and [pnpm](https://pnpm.io/)
-- Run `pnpm install`
-- Run `pnpm dev` and visit `http://localhost:4444`
+每日库重合词自带标记，重复添加就免啦。
 
-## 成语勘误
+普通库每页可看 50、100、250、500 或 1000 个成语，看多看少你说了算。
 
-成语数据库储存于
+默认禁用提示、开启严格模式，开局就认真。
 
-- [./src/data/idioms.txt](./src/data/idioms.txt) - 已知的成语列表
-- [./src/data/polyphones.json](./src/data/polyphones.json) - 特殊发音的成语列表
+分享自带日期或种子，晒战绩也能约同题。
 
-二者互不包含。
+群晖 Docker Compose 安装包已就位，[下载 1.0.0](https://github.com/zhangqihenry/handle-endless/releases/tag/v1.0.0) 就能带回家。
 
-如遇到成语缺失或发音错误，请编辑 [./src/data/new.txt](./src/data/new.txt) 文件，一行一词，完成后执行 `pnpm run update` 命令，脚本会自动抓取 [汉典](https://www.zdic.net/) 的数据更新成语数据库。如遇汉典中也缺失的成语，其会留存在 new.txt 中，需要手动判断与添加。
+[群晖安装说明](docs/SYNOLOGY.md)和[词库管理说明](docs/EXTRA_IDIOMS.md)备好了，安家和添词都有着落。
 
-## Tech Stack
+本项目 fork 自 [antfu/handle](https://github.com/antfu/handle)，继续把猜成语的快乐玩下去。
 
-- [Vue 3](https://v3.vuejs.org/)
-- [Vite](https://vitejs.dev/)
-- [VueUse](https://vueuse.org/)
-- [UnoCSS](https://github.com/antfu/unocss)
-- [Vitesse Lite](https://github.com/antfu/vitesse-lite)
-
-## License
-
-[MIT](./LICENSE) License © 2021-PRESENT [Anthony Fu](https://github.com/antfu)
+作者：[Henry Zhang](https://github.com/zhangqihenry)。

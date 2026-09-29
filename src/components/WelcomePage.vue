@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { isDark, showHelp, showVariants, useMask } from '~/state'
+import { isDark, showHelp, useMask } from '~/state'
 import { initialized, inputMode } from '~/storage'
 import { t } from '~/i18n'
 
@@ -7,10 +7,6 @@ function start() {
   showHelp.value = false
   useMask.value = false
   initialized.value = true
-}
-
-function variantButton() {
-  showVariants.value = true
 }
 
 const final = computed(() => ({ py: 'uo', zy: 'ㄨㄛ', sp: 'o' }[inputMode.value]))
@@ -64,7 +60,7 @@ const final = computed(() => ({ py: 'uo', zy: 'ㄨㄛ', sp: 'o' }[inputMode.valu
       <span tracking-1 pl1>{{ t('start') }}</span>
     </button>
     <div op50>
-      {{ t('update-tip') }}
+      每日题目按北京时间更新。也可使用日历回顾历史题目，或输入种子号随机挑战。
     </div>
 
     <div h-1px w-10 border="b base" m4 />
@@ -73,18 +69,10 @@ const final = computed(() => ({ py: 'uo', zy: 'ㄨㄛ', sp: 'o' }[inputMode.valu
 
     <div h-1px w-10 border="b base" m4 />
 
-    <div h-1px w-10 border="b base" m4 />
-    <button text-primary op80 hover:op100 @click="variantButton()">
-      {{ t('other-variants') }}
-    </button>
     <div>
       <span op40>inspired by </span><a href="https://www.powerlanguage.co.uk/wordle/" target="_blank" op50 hover:op80>Wordle</a>
-      <span op40>, made by </span>
-      <a op50 hover:op80 href="https://twitter.com/antfu7" target="_blank">Anthony</a>
-      <span op40> & </span>
-      <a op50 hover:op80 href="https://twitter.com/iiiiiiines_____" target="_blank">Inès</a>
     </div>
-    <a href="https://github.com/antfu/handle" target="_blank" flex="~ center gap-1" op50 hover:op80>
+    <a href="https://github.com/zhangqihenry/handle-endless" target="_blank" flex="~ center gap-1" op50 hover:op80>
       <div i-carbon-logo-github />
       Source Code
     </a>
