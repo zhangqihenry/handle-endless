@@ -1,11 +1,10 @@
 # 汉兜无限 handle-endless
 
 > 支持每日同题、历史回顾和种子随机挑战的自托管成语猜词游戏。
-> A self-hosted Chinese idiom guessing game with daily puzzles, a puzzle archive and seeded random challenges.
 
 汉兜无限基于 [antfu/handle](https://github.com/antfu/handle) 开发，保留原版的成语与拼音猜词玩法，增加历史日历、种子随机题和词库管理功能。
 
-项目支持通过 **Docker Compose** 部署，可用于 Linux 服务器、运行 Docker Desktop 的电脑，以及支持 Docker 的 NAS。群晖是其中一种部署场景，项目不依赖群晖专有功能。
+项目支持通过 **Docker Compose** 部署，可用于 Linux 服务器、运行 Docker Desktop 的电脑，以及支持 Docker 的 NAS。
 
 **[下载最新版本](https://github.com/zhangqihenry/handle-endless/releases/latest)** · **[Docker 部署指南](docs/DOCKER.md)** · **[群晖部署指南](docs/SYNOLOGY.md)** · **[词库管理说明](docs/EXTRA_IDIOMS.md)**
 
@@ -16,7 +15,6 @@
 - **种子随机挑战**：输入数字种子，在相同词库版本下得到相同题目，方便与朋友一起挑战。
 - **词库管理**：密码保护的管理页面支持查看每日库、维护普通成语库和扩展库，并自动检查重复。
 - **逐词选择随机候选**：普通库中的成语可勾选加入扩展库，取消勾选即可移除；与每日库重合的词会明确标注。
-- **可调分页**：普通库每页可显示 50、100、250、500 或 1000 条，并记住选择。
 - **独立进度与分享**：不同日期和随机题目分别保存进度，分享文本与图片明确标注日期或种子。
 - **默认严格挑战**：默认开启“禁用提示”和“严格模式”，玩家可自行调整。
 
@@ -104,9 +102,7 @@ npx pnpm@7.33.7 package:docker
 
 当前版本已通过应用测试、生产构建和安装包内服务的启动验证，尚未进行 Docker 容器或 NAS 实机验证。详见[验证记录](docs/VALIDATION.md)。
 
-## 作者与致谢
-
-本项目作者：[Henry Zhang](https://github.com/zhangqihenry)。
+## 致谢
 
 本项目 fork 自 [antfu/handle](https://github.com/antfu/handle)，保留上游提交历史与许可证。玩法灵感来自 Wordle。
 
