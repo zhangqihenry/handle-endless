@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { toPng } from 'html-to-image'
 import { saveAs } from 'file-saver'
-import { dayNoHanzi, isIOS, isMobile, puzzleLabel, shareUrl, useMask } from '~/state'
+import { dayNoHanzi, isIOS, isMobile, shareUrl, useMask } from '~/state'
 import { tries } from '~/storage'
 import { t } from '~/i18n'
 
@@ -71,9 +71,6 @@ async function download() {
       <AppName w-full />
       <div w-full text-xs mt1 mb3 op50 ws-nowrap>
         Handle_Endless
-      </div>
-      <div style="max-width: 320px; overflow-wrap: anywhere;" class="share-puzzle-label">
-        {{ puzzleLabel }}
       </div>
 
       <WordBlocks v-for="w, i of tries" :key="i" :word="w" :revealed="true" :animate="false" />

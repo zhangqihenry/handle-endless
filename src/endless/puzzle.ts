@@ -35,7 +35,7 @@ export function poolVersion(words: string[], pronunciations: Record<string, stri
 
 export function randomWord(seed: string, pool: string[], version: string) {
   if (!validSeed(seed) || !pool.length)
-    throw new Error('请输入 1 至 64 位数字种子号。')
+    throw new Error('请输入 1 至 64 位数字挑战码。')
   return pool[Math.floor(seedrandom(`Handle_Endless/${version}/${seed}`)() * pool.length)]
 }
 

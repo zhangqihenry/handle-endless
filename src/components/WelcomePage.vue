@@ -60,7 +60,7 @@ const final = computed(() => ({ py: 'uo', zy: 'ㄨㄛ', sp: 'o' }[inputMode.valu
       <span tracking-1 pl1>{{ t('start') }}</span>
     </button>
     <div op50>
-      每日题目按北京时间更新。也可使用日历回顾历史题目，或输入种子号随机挑战。
+      每日题目按北京时间更新。也可使用日历回顾历史题目，或输入挑战码随机挑战。
     </div>
 
     <div h-1px w-10 border="b base" m4 />

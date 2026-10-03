@@ -31,7 +31,7 @@ const stubs = {
   ResultFooter: { template: '<div class="result-footer" />' },
 }
 
-it('renders the share image with a centered QR code at the bottom and no link text', async () => {
+it('renders the share image with a centered QR code at the bottom, without link or puzzle label', async () => {
   const snapshots: string[] = []
   vi.mocked(toPng).mockImplementation(async (node) => {
     snapshots.push(node.outerHTML)
@@ -46,6 +46,8 @@ it('renders the share image with a centered QR code at the bottom and no link te
   for (const html of snapshots) {
     expect(html).not.toContain(SHARE_URL)
     expect(html).not.toContain('nas:8088')
+    expect(html).not.toContain('历史题目')
+    expect(html).not.toContain('每日题目')
 
     const root = document.createElement('div')
     root.innerHTML = html

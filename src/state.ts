@@ -44,9 +44,9 @@ export const puzzleError = computed(() => {
     if (libraryWarning)
       return libraryWarning
     if (!validSeed(randomSeed))
-      return '种子号必须是 1 至 64 位数字。请点击随机按钮重新输入。'
+      return '挑战码必须是 1 至 64 位数字。请点击随机按钮重新输入。'
     if (params.has('pool') && params.get('pool') !== randomPoolVersion)
-      return '此链接的词库版本与本站不同，无法保证题目一致。请使用相同词库版本的站点，或重新输入种子号开始当前版本的题目。'
+      return '此链接的词库版本与本站不同，无法保证题目一致。请使用相同词库版本的站点，或重新输入挑战码开始当前版本的题目。'
   }
   else if (selectedDay == null || !Number.isSafeInteger(selectedDay) || selectedDay < 1 || selectedDay > daySince.value || (legacyDay != null && !/^\d+$/.test(legacyDay)) || dayNo.value < 1 || dayNo.value > daySince.value) {
     return '请选择 2022-01-01 至今天之间的有效日期。'
@@ -54,8 +54,9 @@ export const puzzleError = computed(() => {
   return ''
 })
 export const puzzleDate = computed(() => dateOfDay(dayNo.value))
-export const puzzleLabel = computed(() => isRandom ? `随机题 · 种子 ${randomSeed}` : `${puzzleDate.value} · ${dayNo.value === daySince.value ? '每日题目' : '历史题目'}`)
-export const dayNoHanzi = computed(() => isRandom ? `种子 ${randomSeed}` : `${puzzleDate.value} · 第${numberToHanzi(dayNo.value)}日`)
+export const puzzleLabel = computed(() => isRandom ? `随机题 · 挑战码 ${randomSeed}` : `${puzzleDate.value} · ${dayNo.value === daySince.value ? '每日题目' : '历史题目'}`)
+export const dayNoHanzi = computed(() => isRandom ? `挑战码 ${randomSeed}` : `${puzzleDate.value} · 第${numberToHanzi(dayNo.value)}日`)
+export const dayLabel = computed(() => isRandom ? `随机题目 · 挑战码 ${randomSeed}` : puzzleDate.value)
 export const gameKey = computed(() => puzzleKey(dayNo.value, isRandom ? randomSeed : undefined, randomPoolVersion))
 export const shareUrl = computed(() => {
   const url = new URL(window.location.pathname, window.location.origin)

@@ -73,7 +73,7 @@ describe('seeded extra dictionary', () => {
     for (const seed of ['0', '001', '20260929', '9'.repeat(64)])
       expect(randomWord(seed, a, version)).toBe(randomWord(seed, b, version))
   })
-  it.each(['', '-1', '1.5', '1e3', '种子', '1'.repeat(65)])('rejects seed %s', seed => expect(validSeed(seed)).toBe(false))
+  it.each(['', '-1', '1.5', '1e3', '挑战码', '1'.repeat(65)])('rejects seed %s', seed => expect(validSeed(seed)).toBe(false))
   it('adds extra words with explicit pronunciation without changing daily answers', () => {
     const before = getAnswerOfDay(1733)
     const oldVersion = randomPoolVersion

@@ -47,7 +47,7 @@ function openDate(date: string) {
 function startRandom() {
   const value = seed.value.trim()
   if (!validSeed(value)) {
-    error.value = '请输入 1 至 64 位数字，种子号中的前导零会保留。'
+    error.value = '请输入 1 至 64 位数字，挑战码中的前导零会保留。'
     return
   }
   go(`/?seed=${value}&pool=${randomPoolVersion}`)
@@ -86,7 +86,7 @@ function openRandom() {
       {{ puzzleLabel }}
     </h1>
     <div class="puzzle-note">
-      {{ isRandom ? '同一种子、同一词库版本，挑战同一道题' : '官方同日题目 · 北京时间 UTC+8' }}
+      {{ isRandom ? '同一挑战码、同一词库版本，挑战同一道题' : '官方同日题目 · 北京时间 UTC+8' }}
     </div>
     <div v-if="!isRandom && dayNo < daySince" class="date-navigation">
       <button :disabled="dayNo <= 1" @click="openDate(dateOfDay(dayNo - 1))">
@@ -149,33 +149,33 @@ function openRandom() {
   <dialog ref="randomDialog" class="endless-dialog" aria-labelledby="random-title" @click="($event.target === randomDialog) && randomDialog?.close()">
     <div class="dialog-heading">
       <h2 id="random-title">
-        种子随机挑战
+        随机挑战
       </h2><button aria-label="关闭随机窗口" @click="randomDialog?.close()">
         ×
       </button>
     </div>
     <p class="dialog-description">
-      输入相同的种子号，就能和朋友挑战同一道题。分享链接会自动带上种子号和词库版本。
+      输入相同的挑战码，就能和朋友挑战同一道题。分享链接会自动带上挑战码和词库版本。
     </p>
     <form @submit.prevent="startRandom">
-      <label for="random-seed" class="seed-label">随机种子号</label>
+      <label for="random-seed" class="seed-label">挑战码</label>
       <input id="random-seed" v-model="seed" class="seed-input" type="text" inputmode="numeric" maxlength="64" placeholder="例如 20260929" autocomplete="off" required>
       <p v-if="error" role="alert" class="form-error">
         {{ error }}
       </p>
       <div class="random-actions">
         <button type="button" @click="generateSeed">
-          生成种子号
+          生成挑战码
         </button><button type="submit" class="primary-action" :disabled="!!libraryWarning">
           开始挑战
         </button>
       </div>
     </form>
     <p class="dialog-description">
-      当前词库 {{ randomPool.length.toLocaleString() }} 个成语。不同种子可能抽到相同成语。
+      当前词库 {{ randomPool.length.toLocaleString() }} 个成语。不同挑战码可能抽到相同成语。
     </p>
     <details class="pool-details">
-      <summary>词库版本</summary><code>{{ randomPoolVersion }}</code><p>扩充词库后，种子对应的题目可能变化。请与朋友使用同一版本。</p>
+      <summary>词库版本</summary><code>{{ randomPoolVersion }}</code><p>扩充词库后，挑战码对应的题目可能变化。请与朋友使用同一版本。</p>
     </details>
   </dialog>
 </template>
