@@ -26,6 +26,7 @@ declare module '@vue/runtime-core' {
     NotTodayBanner: typeof import('./src/components/NotTodayBanner.vue')['default']
     Play: typeof import('./src/components/Play.vue')['default']
     PuzzleToolbar: typeof import('./src/components/PuzzleToolbar.vue')['default']
+    QrCode: typeof import('./src/components/QrCode.vue')['default']
     ResultFooter: typeof import('./src/components/ResultFooter.vue')['default']
     Settings: typeof import('./src/components/Settings.vue')['default']
     ShareButton: typeof import('./src/components/ShareButton.vue')['default']

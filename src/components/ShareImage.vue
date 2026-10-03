@@ -75,12 +75,10 @@ async function download() {
       <div style="max-width: 320px; overflow-wrap: anywhere;" class="share-puzzle-label">
         {{ puzzleLabel }}
       </div>
-      <div style="max-width: 320px; overflow-wrap: anywhere; font-size: 10px; margin-bottom: 12px;">
-        {{ shareUrl }}
-      </div>
 
       <WordBlocks v-for="w, i of tries" :key="i" :word="w" :revealed="true" :animate="false" />
       <ResultFooter :day="true" mt3 w-full />
+      <QrCode :text="shareUrl" :size="80" mt3 />
     </div>
   </div>
 </template>
