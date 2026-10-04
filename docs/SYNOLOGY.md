@@ -1,11 +1,11 @@
-# handle-endless 1.0.0 群晖部署指南
+# handle-endless 1.1.0 群晖部署指南
 
 群晖是本项目支持的部署场景之一。项目使用通用 Docker Compose 配置，也适用于满足运行条件的服务器、电脑和其他 NAS，详见 [Docker 部署指南](DOCKER.md)。
 
 ## Container Manager 安装
 
 1. 确认群晖机型支持 Container Manager 或 Docker 套件，处理器架构受 `node:22-alpine` 镜像支持。
-2. 从 [Releases](https://github.com/zhangqihenry/handle-endless/releases/latest) 下载 Docker ZIP，完整解压到例如 `/volume1/docker/Handle_Endless-1.0.0-docker/`。保留 `www`、`server`、`data` 和 `compose.yaml` 的相对位置。
+2. 从 [Releases](https://github.com/zhangqihenry/handle-endless/releases/latest) 下载 Docker ZIP，完整解压到例如 `/volume1/docker/Handle_Endless-1.1.0-docker/`。保留 `www`、`server`、`data` 和 `compose.yaml` 的相对位置。
 3. 打开 Container Manager → 项目 → 新增，项目名称填写 `handle-endless`，路径选择解压目录，使用已有的 `compose.yaml` 创建并启动。
 4. 访问游戏：`http://群晖局域网IP:13863/`。
 5. 访问词库管理：`http://群晖局域网IP:13863/admin`。默认密码为 `handleendlessadmin123`，可在管理页修改。

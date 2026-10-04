@@ -1,4 +1,4 @@
-# handle-endless 1.0.0 Docker 部署指南
+# handle-endless 1.1.0 Docker 部署指南
 
 本项目可通过通用 Docker Compose 环境部署，不依赖群晖专有功能。适用场景包括 Linux 服务器、Docker Desktop 和支持 Docker 的 NAS。群晖的图形界面操作见[群晖部署指南](SYNOLOGY.md)。
 
@@ -14,10 +14,10 @@
 
 ## 下载与启动
 
-从 [Releases](https://github.com/zhangqihenry/handle-endless/releases/latest) 下载 `Handle_Endless-1.0.0-docker.zip`，完整解压，保持以下目录结构：
+从 [Releases](https://github.com/zhangqihenry/handle-endless/releases/latest) 下载 `Handle_Endless-1.1.0-docker.zip`，完整解压，保持以下目录结构：
 
 ```text
-Handle_Endless-1.0.0-docker/
+Handle_Endless-1.1.0-docker/
   compose.yaml
   .env.example
   www/

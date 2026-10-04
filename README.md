@@ -12,10 +12,10 @@
 
 - **每日同题**：沿用官方答案表和选题规则，同一公历日期的答案与原版保持一致，按北京时间 UTC+8 换日。兼容性细节见[说明](UPSTREAM.md)。
 - **历史日历**：选择 2022 年 1 月 1 日至今天之间的日期，回顾过去的题目。
-- **随机挑战**：输入数字挑战码，在相同词库版本下得到相同题目，方便与朋友一起挑战。
+- **随机挑战**：输入数字挑战码，在相同词库版本下得到相同题目，方便与朋友一起挑战；不输入时自动生成挑战码。
 - **词库管理**：密码保护的管理页面支持查看每日库、维护普通成语库和扩展库，并自动检查重复。
 - **逐词选择随机候选**：普通库中的成语可勾选加入扩展库，取消勾选即可移除；与每日库重合的词会明确标注。
-- **独立进度与分享**：不同日期和随机题目分别保存进度，分享文本与图片明确标注日期或挑战码。
+- **独立进度与分享**：不同日期和随机题目分别保存进度，分享文本与图片明确标注日期或挑战码，分享图片和答题结果附带本题二维码。
 - **默认严格挑战**：默认开启“禁用提示”和“严格模式”，玩家可自行调整。
 
 ## Docker Compose 快速部署
@@ -30,7 +30,7 @@ Docker Desktop 支持 Windows、macOS 和 Linux，详见 [Docker Compose 安装�
 
 ### 安装与启动
 
-1. 从 [Releases](https://github.com/zhangqihenry/handle-endless/releases/latest) 下载 `Handle_Endless-1.0.0-docker.zip` 并完整解压。请选择带 `docker.zip` 的安装包；GitHub 自动生成的 Source code 压缩包为源代码。
+1. 从 [Releases](https://github.com/zhangqihenry/handle-endless/releases/latest) 下载 `Handle_Endless-1.1.0-docker.zip` 并完整解压。请选择带 `docker.zip` 的安装包；GitHub 自动生成的 Source code 压缩包为源代码。
 2. 在解压后的目录中打开终端，执行：
 
    ```sh
