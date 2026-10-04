@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { dayNo, daySince, isRandom, puzzleDate, puzzleLabel, randomSeed } from '~/state'
+import { dayNo, daySince, isRandom, puzzleDate, randomSeed } from '~/state'
 import { history, pauseTimer } from '~/storage'
 import { FIRST_DATE, dateOfDay, parseDate, validSeed } from '~/endless/puzzle'
 import { libraryWarning, randomPool, randomPoolVersion } from '~/endless/library'
@@ -11,6 +11,8 @@ const month = ref(puzzleDate.value.slice(0, 7))
 const seed = ref(randomSeed)
 const error = ref('')
 const today = computed(() => dateOfDay(daySince.value))
+const titleMain = computed(() => isRandom ? `挑战码 ${randomSeed}` : puzzleDate.value)
+const titleTag = computed(() => isRandom ? '随机题目' : dayNo.value === daySince.value ? '每日题目' : '历史题目')
 const monthTitle = computed(() => `${Number(month.value.slice(0, 4))} 年 ${Number(month.value.slice(5))} 月`)
 const cells = computed(() => {
   const start = new Date(`${month.value}-01T00:00:00Z`)
@@ -45,6 +47,9 @@ function openDate(date: string) {
   go(`/?date=${date}`)
 }
 function startRandom() {
+  // An empty field starts a freshly generated challenge
+  if (!seed.value.trim())
+    generateSeed()
   const value = seed.value.trim()
   if (!validSeed(value)) {
     error.value = '请输入 1 至 64 位数字，挑战码中的前导零会保留。'
@@ -68,9 +73,6 @@ function openRandom() {
 
 <template>
   <section class="puzzle-toolbar">
-    <div class="edition">
-      HANDLE_ENDLESS <span>汉兜无限</span>
-    </div>
     <div class="mode-actions">
       <button :class="{ selected: !isRandom && dayNo === daySince }" @click="go('/')">
         <span i-carbon-calendar-heat-map />今日
@@ -83,11 +85,9 @@ function openRandom() {
       </button>
     </div>
     <h1 class="puzzle-title">
-      {{ puzzleLabel }}
+      <span class="puzzle-title-main">{{ titleMain }}</span>
+      <span class="puzzle-title-tag">{{ titleTag }}</span>
     </h1>
-    <div class="puzzle-note">
-      {{ isRandom ? '同一挑战码、同一词库版本，挑战同一道题' : '官方同日题目 · 北京时间 UTC+8' }}
-    </div>
     <div v-if="!isRandom && dayNo < daySince" class="date-navigation">
       <button :disabled="dayNo <= 1" @click="openDate(dateOfDay(dayNo - 1))">
         ← 前一天
@@ -159,7 +159,7 @@ function openRandom() {
     </p>
     <form @submit.prevent="startRandom">
       <label for="random-seed" class="seed-label">挑战码</label>
-      <input id="random-seed" v-model="seed" class="seed-input" type="text" inputmode="numeric" maxlength="64" placeholder="例如 20260929" autocomplete="off" required>
+      <input id="random-seed" v-model="seed" class="seed-input" type="text" inputmode="numeric" maxlength="64" placeholder="留空则自动生成" autocomplete="off">
       <p v-if="error" role="alert" class="form-error">
         {{ error }}
       </p>

@@ -4,24 +4,14 @@ import { encode } from 'uqr'
 const props = withDefaults(
   defineProps<{
     text: string
-    // Edge length in px of the module area, quiet zone excluded
+    // Edge length in px, transparent and without a quiet zone
     size?: number
   }>(), {
     size: 80,
   },
 )
 
-// Quiet zone in modules, drawn white around the pattern so it scans on dark backgrounds
-const QUIET_ZONE = 2
-
 const qr = computed(() => encode(props.text, { ecc: 'L', border: 0 }))
-
-const viewBox = computed(() => {
-  const total = qr.value.size + QUIET_ZONE * 2
-  return `${-QUIET_ZONE} ${-QUIET_ZONE} ${total} ${total}`
-})
-
-const outerSize = computed(() => props.size * (qr.value.size + QUIET_ZONE * 2) / qr.value.size)
 
 // One path, dark modules merged into horizontal runs
 const path = computed(() => {
@@ -46,10 +36,9 @@ const path = computed(() => {
 <template>
   <svg
     role="img" aria-label="本题链接二维码"
-    :viewBox="viewBox" :width="outerSize" :height="outerSize"
-    shape-rendering="crispEdges"
+    :viewBox="`0 0 ${qr.size} ${qr.size}`" :width="size" :height="size"
+    shape-rendering="crispEdges" text-ok
   >
-    <rect :x="-QUIET_ZONE" :y="-QUIET_ZONE" :width="qr.size + QUIET_ZONE * 2" :height="qr.size + QUIET_ZONE * 2" fill="#fff" />
-    <path :d="path" fill="#000" />
+    <path :d="path" fill="currentColor" />
   </svg>
 </template>

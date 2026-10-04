@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { toPng } from 'html-to-image'
 import { saveAs } from 'file-saver'
-import { dayNoHanzi, isIOS, isMobile, shareUrl, useMask } from '~/state'
+import { dayNoHanzi, isIOS, isMobile, isRandom, shareUrl, useMask } from '~/state'
 import { tries } from '~/storage'
 import { t } from '~/i18n'
 
@@ -68,7 +68,7 @@ async function download() {
 
   <div v-if="show" fixed op0 top-0 left-0 pointer-events-none>
     <div ref="el" flex="~ col" items-center p="x6 y4" bg-base relative text-center>
-      <AppName w-full />
+      <AppName w-full :endless="isRandom" />
       <div w-full text-xs mt1 mb3 op50 ws-nowrap>
         Handle_Endless
       </div>

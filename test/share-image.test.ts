@@ -14,6 +14,7 @@ vi.mock('../src/state', async () => {
     dayNoHanzi: ref('2022-01-01 · 第一日'),
     isIOS: false,
     isMobile: false,
+    isRandom: false,
     puzzleLabel: ref('2022-01-01 · 历史题目'),
     shareUrl: ref('http://nas:8088/?date=2022-01-01'),
     useMask: ref(false),

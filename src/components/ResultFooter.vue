@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { formatDuration, meta } from '~/storage'
 import { t } from '~/i18n'
-import { dayLabel } from '~/state'
+import { dayLabel, isRandom } from '~/state'
 
 defineProps<{
   day?: boolean
@@ -20,7 +20,13 @@ const hintText = computed(() => {
 <template>
   <div op50 my1 text-sm text-center>
     <template v-if="day">
-      {{ dayLabel }} ·
+      <!-- The long random label gets a line of its own -->
+      <div v-if="isRandom">
+        {{ dayLabel }}
+      </div>
+      <template v-else>
+        {{ dayLabel }} ·
+      </template>
     </template>
     {{ hintText }} ·
     <template v-if="meta.strict">

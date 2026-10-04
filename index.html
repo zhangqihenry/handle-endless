@@ -21,6 +21,19 @@
       if (setting === 'dark' || (prefersDark && setting !== 'light'))
         document.documentElement.classList.toggle('dark', true)
     })()
+    // Keep WeChat's font size setting from enlarging text inside fixed-size tiles
+    ;(function() {
+      function keepStandardFontSize() {
+        WeixinJSBridge.invoke('setFontSizeCallback', { fontSize: 0 })
+        WeixinJSBridge.on('menu:setfont', function() {
+          WeixinJSBridge.invoke('setFontSizeCallback', { fontSize: 0 })
+        })
+      }
+      if (typeof WeixinJSBridge === 'object' && typeof WeixinJSBridge.invoke === 'function')
+        keepStandardFontSize()
+      else
+        document.addEventListener('WeixinJSBridgeReady', keepStandardFontSize, false)
+    })()
   </script>
   <script type="module" src="/src/main.ts"></script>
 </body>

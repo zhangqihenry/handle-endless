@@ -6,6 +6,13 @@ body,
   padding: 0;
 }
 
+/* Fixed text size regardless of the system font setting, so glyphs stay inside the tiles */
+html,
+body {
+  -webkit-text-size-adjust: 100% !important;
+  text-size-adjust: 100% !important;
+}
+
 html.dark {
   background: #121212;
 }
@@ -76,13 +83,12 @@ ul {
 
 /* Handle_Endless navigation and accessible native dialogs */
 .puzzle-toolbar { max-width: 460px; margin: 0 auto; padding: 22px 18px 0; }
-.edition { font-size: 11px; letter-spacing: 2px; color: #638086; margin-bottom: 18px; }
-.edition span { margin-left: 8px; letter-spacing: 1px; }
 .mode-actions { display: flex; justify-content: center; gap: 8px; }
 .mode-actions button { display: flex; align-items: center; justify-content: center; gap: 7px; min-width: 96px; padding: 10px 18px; border: 1px solid #d7e2e3; border-radius: 8px; font-size: 14px; }
 .mode-actions .selected { color: var(--c-primary); background: #0d828e0d; border-color: var(--c-primary); }
-.puzzle-title { font-size: 17px; font-weight: 600; margin: 22px 0 6px; overflow-wrap: anywhere; }
-.puzzle-note { font-size: 12px; opacity: .6; }
+.puzzle-title { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 6px 10px; margin: 20px 0 0; font-weight: 400; }
+.puzzle-title-main { font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif; font-size: 17px; letter-spacing: .06em; font-variant-numeric: tabular-nums; opacity: .8; overflow-wrap: anywhere; }
+.puzzle-title-tag { font-size: 12px; line-height: 20px; letter-spacing: .12em; padding: 0 10px; color: var(--c-primary); background: #0d828e0d; border: 1px solid #0d828e40; border-radius: 999px; white-space: nowrap; }
 .date-navigation { display: flex; justify-content: center; gap: 35px; margin-top: 14px; font-size: 13px; color: var(--c-primary); }
 .endless-dialog { color: #33494c; background: #fff; border: 1px solid #dbe5e6; border-radius: 16px; padding: 24px; width: min(420px, calc(100vw - 24px)); max-height: calc(100dvh - 32px); overflow: auto; margin: auto; text-align: left; box-shadow: 0 20px 80px #102c3c33; }
 .endless-dialog::backdrop { background: #142d3c66; backdrop-filter: blur(3px); }
@@ -113,6 +119,7 @@ ul {
 .share-puzzle-label { font-size: 14px; font-weight: 600; margin: 4px 0 16px; max-width: 360px; overflow-wrap: anywhere; }
 .dark .endless-dialog { background: #182124; color: #d6e0e1; border-color: #36474b; color-scheme: dark; }
 .dark .mode-actions button, .dark .date-jump, .dark .calendar-heading button { border-color: #36474b; }
-.dark .mode-actions .selected { border-color: #299eac; color: #6cc1c7; }
+.dark .mode-actions .selected, .dark .puzzle-title-tag { border-color: #299eac; color: #6cc1c7; }
 button:focus-visible, input:focus-visible, a:focus-visible, summary:focus-visible { outline: 2px solid var(--c-primary); outline-offset: 3px; }
 @media (max-width: 380px) { .mode-actions button { min-width: 84px; padding: 9px 12px; } .endless-dialog { padding: 18px; } }
+@media (max-width: 380px) { svg.app-name-endless { height: 1.5rem; } }

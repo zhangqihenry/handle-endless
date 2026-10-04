@@ -23,24 +23,24 @@ it('draws exactly the modules of the encoded text', () => {
   wrapper.unmount()
 })
 
-it('sizes the module area to the requested edge length, with a white quiet zone around it', () => {
+it('sizes the code to the requested edge length on a transparent background', () => {
   const wrapper = mount(QrCode, { props: { text: URL_TEXT, size: 80 } })
   const { size } = encode(URL_TEXT, { ecc: 'L', border: 0 })
   const svg = wrapper.get('svg')
-  const outer = Number(svg.attributes('width'))
-  expect(svg.attributes('height')).toBe(String(outer))
-  expect(outer * size / (size + 4)).toBeCloseTo(80)
-  expect(svg.attributes('viewBox')).toBe(`-2 -2 ${size + 4} ${size + 4}`)
-  expect(wrapper.get('rect').attributes('fill')).toBe('#fff')
-  expect(wrapper.get('path').attributes('fill')).toBe('#000')
+  expect(svg.attributes('width')).toBe('80')
+  expect(svg.attributes('height')).toBe('80')
+  expect(svg.attributes('viewBox')).toBe(`0 0 ${size} ${size}`)
+  expect(wrapper.find('rect').exists()).toBe(false)
+  // Modules take the correct-tile color through currentColor
+  expect(wrapper.get('svg').attributes('text-ok')).toBeDefined()
+  expect(wrapper.get('path').attributes('fill')).toBe('currentColor')
   wrapper.unmount()
 })
 
-it('keeps the module area at 80px by default and follows the text', async () => {
+it('keeps the code at 80px by default and follows the text', async () => {
   const wrapper = mount(QrCode, { props: { text: 'http://nas:8088/?date=2022-01-01' } })
   const before = wrapper.get('path').attributes('d')
-  const { size } = encode('http://nas:8088/?date=2022-01-01', { ecc: 'L', border: 0 })
-  expect(Number(wrapper.get('svg').attributes('width')) * size / (size + 4)).toBeCloseTo(80)
+  expect(wrapper.get('svg').attributes('width')).toBe('80')
 
   await wrapper.setProps({ text: 'http://nas:8088/?date=2022-01-02' })
   expect(wrapper.get('path').attributes('d')).not.toBe(before)

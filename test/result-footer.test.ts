@@ -1,12 +1,16 @@
 // @vitest-environment jsdom
 import { mount } from '@vue/test-utils'
+import type { Ref } from 'vue'
 import { expect, it, vi } from 'vitest'
 import ResultFooter from '../src/components/ResultFooter.vue'
-import { dayLabel } from '../src/state'
+import { dayLabel as stateDayLabel } from '../src/state'
+
+// The mock below replaces the computed label with a writable ref
+const dayLabel = stateDayLabel as unknown as Ref<string>
 
 vi.mock('../src/state', async () => {
   const { ref } = await import('vue')
-  return { dayLabel: ref('2022-01-01') }
+  return { dayLabel: ref('2022-01-01'), isRandom: false }
 })
 vi.mock('../src/storage', async () => {
   const { ref } = await import('vue')
